@@ -1,17 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour {
+    [SerializeField] GameObject projectilePrefab;
     [SerializeField] float cooldown;
+    Func<Func<GameObject>, GameObject> _instantiator;
     bool _isOnCooldown;
-    
+
+    public void SetObjectInstantiator(Func<Func<GameObject>, GameObject> instantiator) {
+        _instantiator = instantiator;
+    }
+
     public void Shoot() {
         if (_isOnCooldown) {
             return;
         }
 
         StartCoroutine(Cooldown());
-        ShootLogic();
+        var projectile = _instantiator(() => Instantiate(projectilePrefab, transform.position, transform.rotation));
+        ShootLogic(projectile);
     }
 
     IEnumerator Cooldown() {
@@ -20,5 +28,5 @@ public abstract class Weapon : MonoBehaviour {
         _isOnCooldown = false;
     }
 
-    protected abstract void ShootLogic();
+    protected abstract void ShootLogic(GameObject projectile);
 }

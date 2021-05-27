@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
     [SerializeField] GameObject playerPrefab;
@@ -11,34 +10,35 @@ public class Spawner : MonoBehaviour {
     [SerializeField] BoxCollider2D screenBounds;
 
     [SerializeField] float playerSafeZoneSize;
-    GameObject _player;
     Action<float> _getShotCallback;
+    GameObject _player;
 
     GameObject PlayerSpawner() {
         _player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        _player.GetComponent<PlayerController>().SetObjectInstantiator(Spawn);
         return _player;
     }
 
     GameObject EnemySpawner() {
         var playerSafeBounds = new Bounds(_player.transform.position, Vector2.one * playerSafeZoneSize);
-        
+
         Vector3 position;
         while (playerSafeBounds.Contains(position = screenBounds.bounds.GetRandomPointInBounds())) { }
-        
+
         var rotation = Utils.GetRandomRotation();
         var enemy = Instantiate(enemyPrefab, position, rotation);
 
         enemy.GetComponent<CanBeShot>().SetGetShotCallback(_getShotCallback);
-        
+
         return enemy;
     }
 
     GameObject Spawn(Func<GameObject> spawner) {
         var spawned = spawner();
-        
+
         spawned.GetComponent<Drawable>().SetDrawingModeSelector(drawingModeSelector);
         spawned.transform.parent = map.transform;
-        
+
         return spawned;
     }
 

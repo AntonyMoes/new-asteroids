@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4cfbf4f4e045fb8e8cb7bf3842842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.1
-  bulletPrefab: {fileID: 778275390775239271, guid: f191cf6aa1aa20a4fb3b14dd17f68f14,
+  projectilePrefab: {fileID: 778275390775239271, guid: f191cf6aa1aa20a4fb3b14dd17f68f14,
     type: 3}
+  cooldown: 0.1
 --- !u!114 &1121894705605375968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,9 +27,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193066d1c0184660b124bbdd9cea36b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.3
-  laserPrefab: {fileID: 617172648472868781, guid: 212c007ba429a2f4a9c0dbf11bbde0ff,
+  projectilePrefab: {fileID: 617172648472868781, guid: 212c007ba429a2f4a9c0dbf11bbde0ff,
     type: 3}
+  cooldown: 0.3
 --- !u!114 &5829306971227032063
 MonoBehaviour:
   m_ObjectHideFlags: 0
