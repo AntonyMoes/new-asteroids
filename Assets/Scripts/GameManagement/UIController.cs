@@ -1,11 +1,11 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class UIController : MonoBehaviour{
+public class UIController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] GameObject restartMenu;
     [SerializeField] TextMeshProUGUI finalScoreText;
-    
+
     public void UpdateScore(float newScore) {
         scoreText.text = $"Score: {newScore}";
         finalScoreText.text = $"Final score: {newScore}";

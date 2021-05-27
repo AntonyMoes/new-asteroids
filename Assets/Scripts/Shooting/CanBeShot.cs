@@ -3,14 +3,20 @@ using UnityEngine;
 
 public class CanBeShot : MonoBehaviour {
     [SerializeField] float points;
-    Action<float> _getShotCallback;
+    Action<GameObject> _generalCallback;
+    Action<float> _pointsCallback;
 
-    public void SetGetShotCallback(Action<float> getShotCallback) {
-        _getShotCallback = getShotCallback;
+    public void SetPointsCallback(Action<float> pointsCallback) {
+        _pointsCallback = pointsCallback;
+    }
+
+    public void SetGeneralCallback(Action<GameObject> generalCallback) {
+        _generalCallback = generalCallback;
     }
 
     public void GetShot() {
-        _getShotCallback?.Invoke(points);
+        _pointsCallback?.Invoke(points);
+        _generalCallback?.Invoke(gameObject);
         Destroy(gameObject);
     }
 }

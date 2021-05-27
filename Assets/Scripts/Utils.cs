@@ -18,13 +18,19 @@ public static class Utils {
         if (x is float xVal) {
             res.x = xVal;
         }
+
         if (y is float yVal) {
             res.y = yVal;
         }
+
         if (z is float zVal) {
             res.z = zVal;
         }
 
         return res;
+    }
+
+    public static T RandomElement<T>(this T[] array) {
+        return array[Random.Range(0, array.Length)];
     }
 }

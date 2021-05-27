@@ -12,21 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d682e012a6614b48b40ecb8065571ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: 10
---- !u!114 &4587622851179350226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1727062475344935495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1558d940a24c2a9c2f55f261635f98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpeed: 1.5
-  maxSpeed: 4
+  points: 0
 --- !u!114 &5955405171139487563
 MonoBehaviour:
   m_ObjectHideFlags: 0

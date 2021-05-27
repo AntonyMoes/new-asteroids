@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     [SerializeField] Spawner spawner;
     [SerializeField] UIController uiController;
+    [SerializeField] int initialWaveSize;
+    [SerializeField] float initialWaveCooldown;
+    [SerializeField] float minimalWaveCooldown;
 
     float _score;
 
@@ -23,16 +27,27 @@ public class GameManager : MonoBehaviour {
 
     public void StartGame() {
         ResetScore();
-        
+
         uiController.SetUIMode(true);
-        
+
         var player = spawner.SpawnPlayer();
         player.GetComponent<PlayerController>().SetDestroyCallback(EndGame);
-        spawner.SpawnEnemyWave(3);
+        StartCoroutine(SpawnAsteroids());
     }
 
     void EndGame() {
+        StopAllCoroutines();
         uiController.SetUIMode(false);
         spawner.ClearMap();
+    }
+
+    IEnumerator SpawnAsteroids() {
+        var difficulty = 0;
+        while (true) {
+            spawner.SpawnAsteroidWave(initialWaveSize + difficulty / 3);
+
+            yield return new WaitForSeconds(Mathf.Max(initialWaveCooldown - difficulty * 0.5f, minimalWaveCooldown));
+            difficulty++;
+        }
     }
 }

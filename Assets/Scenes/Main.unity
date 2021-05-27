@@ -434,7 +434,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1247,7 +1247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662566398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.46337, y: -8.002523, z: -81.79103}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1267,8 +1267,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5478744297181186497, guid: 2ab73e089dd041f45900f44ccf284075,
     type: 3}
-  enemyPrefab: {fileID: 1727062475344935495, guid: 37daee9fb44c1c447a7f933d8991e5d5,
-    type: 3}
+  bigAsteroidPrefabs:
+  - {fileID: 8498241517063436284, guid: b972ed66dc991534eb38654a7db11be7, type: 3}
+  asteroidPrefabs:
+  - {fileID: 7330839530276889032, guid: 0f818ca24abe9ad41bf0f4c934db4e71, type: 3}
+  minAsteroidSpeedup: 1.5
+  maxAsteroidSpeedup: 2
+  minAsteroidsNum: 2
+  maxAsteroidsNum: 3
+  ufoPrefabs: []
   map: {fileID: 861466910}
   drawingModeSelector: {fileID: 1662566401}
   screenBounds: {fileID: 644399308}
@@ -1299,6 +1306,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 1662566400}
   uiController: {fileID: 1662566403}
+  initialWaveSize: 3
+  initialWaveCooldown: 20
+  minimalWaveCooldown: 8
 --- !u!114 &1662566403
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public class SpeedSetter : MonoBehaviour {
-    [SerializeField] float minSpeed;
-    [SerializeField] float maxSpeed;
+    public float minSpeed;
+    public float maxSpeed;
 
     void Start() {
         var rb = GetComponent<Rigidbody2D>();
