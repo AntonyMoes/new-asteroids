@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void EndGame() {
-        if (!this) {
+        if (!this || !uiController) {
             return;
         }
 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour {
     }
 
     IEnumerator SpawnUfos() {
-        yield return new WaitForSeconds(initialUfoCooldown);
+        // yield return new WaitForSeconds(initialUfoCooldown);
 
         var difficulty = 0;
         while (true) {

@@ -24,7 +24,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.3}
+  m_Size: {x: 0.1, y: 0.31}
   m_EdgeRadius: 0
 --- !u!114 &-4903361817557033065
 MonoBehaviour:
@@ -72,6 +72,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8640111485966079026, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 410bc810c51872a4abb679b521e46020,
+        type: 3}
+    - target: {fileID: 8640111485966079026, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8640111487330976864, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
         type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
