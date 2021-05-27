@@ -17,8 +17,8 @@ public class Spawner : MonoBehaviour {
     [SerializeField] BoxCollider2D screenBounds;
 
     [SerializeField] float playerSafeZoneSize;
-    Action<float> _getShotCallback;
     GameObject _player;
+    Action<float> _pointsCallback;
 
     GameObject PlayerSpawner() {
         _player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
@@ -69,7 +69,7 @@ public class Spawner : MonoBehaviour {
 
     GameObject EnemySpawner(Func<GameObject> spawner) {
         var spawned = spawner();
-        spawned.GetComponent<CanBeShot>().SetPointsCallback(_getShotCallback);
+        spawned.GetComponent<CanBeShot>().SetPointsCallback(_pointsCallback);
         return spawned;
     }
 
@@ -82,8 +82,8 @@ public class Spawner : MonoBehaviour {
         return spawned;
     }
 
-    public void SetGetShotCallback(Action<float> getShotCallback) {
-        _getShotCallback = getShotCallback;
+    public void SetPointsCallback(Action<float> pointsCallback) {
+        _pointsCallback = pointsCallback;
     }
 
     public void ClearMap() {

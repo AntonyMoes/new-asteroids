@@ -13,11 +13,15 @@ public class GameManager : MonoBehaviour {
     float _score;
 
     void Start() {
-        spawner.SetGetShotCallback(UpdateScore);
+        spawner.SetPointsCallback(UpdateScore);
         StartGame();
     }
 
     void UpdateScore(float additionalScore) {
+        if (!this || !uiController) {
+            return;
+        }
+
         _score += additionalScore;
         uiController.UpdateScore(_score);
     }
@@ -40,6 +44,10 @@ public class GameManager : MonoBehaviour {
     }
 
     void EndGame() {
+        if (!this) {
+            return;
+        }
+
         StopAllCoroutines();
         uiController.SetUIMode(false);
         spawner.ClearMap();
