@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerKiller : MonoBehaviour {
-    void OnCollisionEnter2D(Collision2D other) {
-        if (!other.gameObject.CompareTag("Player")) {
+    void OnTriggerEnter2D(Collider2D other) {
+        if (!other.CompareTag("Player")) {
             return;
         }
-        
+
         Destroy(other.gameObject);
     }
 }

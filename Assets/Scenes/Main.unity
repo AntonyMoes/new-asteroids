@@ -1275,11 +1275,12 @@ MonoBehaviour:
   maxAsteroidSpeedup: 2
   minAsteroidsNum: 2
   maxAsteroidsNum: 3
-  ufoPrefabs: []
+  ufoPrefabs:
+  - {fileID: 8610656664863238761, guid: 1249007c4ce553e47992c85cdcdf0149, type: 3}
   map: {fileID: 861466910}
   drawingModeSelector: {fileID: 1662566401}
   screenBounds: {fileID: 644399308}
-  playerSafeZoneSize: 6
+  playerSafeZoneSize: 9
 --- !u!114 &1662566401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,8 +1308,10 @@ MonoBehaviour:
   spawner: {fileID: 1662566400}
   uiController: {fileID: 1662566403}
   initialWaveSize: 3
-  initialWaveCooldown: 20
+  initialWaveCooldown: 18
   minimalWaveCooldown: 8
+  initialUfoCooldown: 20
+  minimalUfoCooldown: 8
 --- !u!114 &1662566403
 MonoBehaviour:
   m_ObjectHideFlags: 0

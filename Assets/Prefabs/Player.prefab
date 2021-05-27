@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thrust: 0.2
-  rotationSpeed: 120
+  rotationSpeed: 150
 --- !u!1001 &4318881089629982115
 PrefabInstance:
   m_ObjectHideFlags: 0

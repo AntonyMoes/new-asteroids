@@ -26,12 +26,26 @@ public class Spawner : MonoBehaviour {
         return _player;
     }
 
-    GameObject BigAsteroidSpawner() {
+    Vector3 GetRandomPosition() {
         var playerSafeBounds = new Bounds(_player.transform.position, Vector2.one * playerSafeZoneSize);
 
         Vector3 position;
         while (playerSafeBounds.Contains(position = screenBounds.bounds.GetRandomPointInBounds())) { }
 
+        return position;
+    }
+
+    GameObject UfoSpawner() {
+        var position = GetRandomPosition();
+        var ufo = Instantiate(ufoPrefabs.RandomElement(), position, Quaternion.identity);
+
+        ufo.GetComponent<PlayerFollower>().SetPlayer(_player.transform);
+
+        return ufo;
+    }
+
+    GameObject BigAsteroidSpawner() {
+        var position = GetRandomPosition();
         var rotation = Utils.GetRandomRotation();
         var asteroid = Instantiate(bigAsteroidPrefabs.RandomElement(), position, rotation);
 
@@ -53,7 +67,7 @@ public class Spawner : MonoBehaviour {
         return asteroid;
     }
 
-    GameObject SpawnEnemy(Func<GameObject> spawner) {
+    GameObject EnemySpawner(Func<GameObject> spawner) {
         var spawned = spawner();
         spawned.GetComponent<CanBeShot>().SetPointsCallback(_getShotCallback);
         return spawned;
@@ -82,16 +96,20 @@ public class Spawner : MonoBehaviour {
         return Spawn(PlayerSpawner);
     }
 
+    public void SpawnUfo() {
+        Spawn(() => EnemySpawner(UfoSpawner));
+    }
+
     public void SpawnAsteroidWave(int waveSize) {
         for (var i = 0; i < waveSize; i++) {
-            Spawn(() => SpawnEnemy(BigAsteroidSpawner));
+            Spawn(() => EnemySpawner(BigAsteroidSpawner));
         }
     }
 
     void SpawnSmallAsteroids(GameObject asteroid) {
         var asteroidsNum = Random.Range(minAsteroidsNum, maxAsteroidsNum + 1);
         for (var i = 0; i < asteroidsNum; i++) {
-            Spawn(() => SpawnEnemy(() => AsteroidSpawner(asteroid)));
+            Spawn(() => EnemySpawner(() => AsteroidSpawner(asteroid)));
         }
     }
 }
