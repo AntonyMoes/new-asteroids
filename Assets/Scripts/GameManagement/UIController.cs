@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour {
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] GameObject startMenu;
     [SerializeField] GameObject restartMenu;
     [SerializeField] TextMeshProUGUI finalScoreText;
+    [SerializeField] AudioSource mainPlayer;
+    [SerializeField] float menuVolumeModifier;
 
     public void UpdateScore(float newScore) {
         if (!scoreText || !finalScoreText) {
@@ -15,12 +18,14 @@ public class UIController : MonoBehaviour {
         finalScoreText.text = $"Final score: {newScore}";
     }
 
-    public void SetUIMode(bool isPlayingMode) {
+    public void SetUIMode(UIMode uiMode) {
         if (!scoreText || !restartMenu) {
             return;
         }
 
-        scoreText.enabled = isPlayingMode;
-        restartMenu.SetActive(!isPlayingMode);
+        startMenu.SetActive(uiMode == UIMode.Start);
+        restartMenu.SetActive(uiMode == UIMode.Menu);
+        scoreText.enabled = uiMode == UIMode.Game;
+        mainPlayer.volume = uiMode == UIMode.Game ? 1 : menuVolumeModifier;
     }
 }

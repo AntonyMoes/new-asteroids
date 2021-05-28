@@ -25,6 +25,8 @@ entity "Game Manager"
 entity ScoreText
 entity RestartMenu
 entity RestartButton
+entity StartMenu
+entity StartButton
 entity FinalScore
 entity HUDRoot
 
@@ -123,6 +125,8 @@ class UIController {
     - scoreText: TextMeshProGUI
     - restartMenu: GameObject
     - finalScoreText: finalScoreText
+    - mainPlayer: AudioSource
+    - menuVolumeModifier: float
     
     + void UpdateScore(float newScore)
     + void SetUIMode(bool isPlayingMode)
@@ -140,9 +144,13 @@ class CanBeShot {
 abstract class Weapon {
     - projectilePrefab: GameObject
     - cooldown: float
+    - shotSound: AudioClip
+    - float: minPitch
+    - float: maxPitch
     - _collider: Collider2D
     - _instantiator: Func<Func<GameObject>, GameObject>
     - _isOnCooldown: bool
+    - _audioSource: AudioSource
     
     + void Shoot()
     + void SetObjectInstantiator()
@@ -301,6 +309,7 @@ Player <-- PlayerFollower : Follows
 "Game Manager" *-- Spawner
 "Game Manager" *-- UIController
 "Game Manager" *-- DrawingModeSelector
+"Game Manager" *-- AudioSource
 Spawner <-- GameManager : Spawns entities
 UIController <-- GameManager : Toggles UI mode
 UIController <-- GameManager : Updates score
@@ -308,12 +317,16 @@ Spawner <-- BigAsteroid : Spawns asteroids
 GameManager <-- Player : Notifies on death
 Spawner <-- Weapon : Spawns projectiles
 
+AudioSource o-- UIController
 ScoreText o-- UIController
 RestartMenu o-- UIController
+StartMenu o-- UIController
 FinalScore *-- RestartMenu
 RestartButton *-- RestartMenu
+StartButton *-- StartMenu
 FinalScore o-- UIController
 GameManager <-- RestartButton : Restarts game
+GameManager <-- StartButton : Starts game
 
 Laser o-- LaserRay
 MachineGun o-- Bullet

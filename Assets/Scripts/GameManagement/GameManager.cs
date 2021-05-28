@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         spawner.SetPointsCallback(UpdateScore);
-        StartGame();
+        uiController.SetUIMode(UIMode.Start);
     }
 
     void UpdateScore(float additionalScore) {
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     public void StartGame() {
         ResetScore();
 
-        uiController.SetUIMode(true);
+        uiController.SetUIMode(UIMode.Game);
 
         var player = spawner.SpawnPlayer();
         player.GetComponent<PlayerController>().SetDestroyCallback(EndGame);
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
         }
 
         StopAllCoroutines();
-        uiController.SetUIMode(false);
+        uiController.SetUIMode(UIMode.Menu);
         spawner.ClearMap();
     }
 
