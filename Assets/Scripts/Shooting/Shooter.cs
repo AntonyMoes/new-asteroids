@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class Shooter : MonoBehaviour {
-    [SerializeField] bool _destroyOnHit;
+    [SerializeField] bool destroyOnHit;
 
     void OnTriggerEnter2D(Collider2D other) {
         if (!other.CompareTag("Enemy")) {
@@ -10,7 +10,7 @@ public class Shooter : MonoBehaviour {
 
         other.gameObject.GetComponent<CanBeShot>().GetShot();
 
-        if (_destroyOnHit) {
+        if (destroyOnHit) {
             Destroy(gameObject);
         }
     }

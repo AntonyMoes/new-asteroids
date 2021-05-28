@@ -5,8 +5,14 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float cooldown;
+
+    Collider2D _collider;
     Func<Func<GameObject>, GameObject> _instantiator;
     bool _isOnCooldown;
+
+    void Awake() {
+        _collider = GetComponent<Collider2D>();
+    }
 
     public void SetObjectInstantiator(Func<Func<GameObject>, GameObject> instantiator) {
         _instantiator = instantiator;
@@ -19,6 +25,7 @@ public abstract class Weapon : MonoBehaviour {
 
         StartCoroutine(Cooldown());
         var projectile = _instantiator(() => Instantiate(projectilePrefab, transform.position, transform.rotation));
+        projectile.transform.Translate(projectile.transform.up * _collider.bounds.extents.y, Space.World);
         ShootLogic(projectile);
     }
 

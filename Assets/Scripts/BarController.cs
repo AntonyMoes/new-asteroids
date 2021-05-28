@@ -5,11 +5,11 @@ using UnityEngine.UI;
 public class BarController : MonoBehaviour {
     const float MaxValue = 1;
     const float MinValue = 0;
-    [SerializeField] GameObject barRoot;
-    [SerializeField] GameObject sliderPrefab;
-    GameObject _bar;
+    [SerializeField] GameObject rootPrefab;
+    [SerializeField] GameObject barPrefab;
+    GameObject _barRoot;
     int _pointer;
-    GameObject _sliderRoot;
+    GameObject _root;
 
     Slider[] _sliders;
 
@@ -31,18 +31,10 @@ public class BarController : MonoBehaviour {
                 return;
             }
 
-            if (value < _sliders.Length * MaxValue) {
-                Debug.Log($"Set {value}");
-            }
-
             if (value < 0) {
                 value = 0;
             } else if (value > _sliders.Length * MaxValue) {
                 value = _sliders.Length * MaxValue;
-            }
-
-            if (value < _sliders.Length * MaxValue) {
-                Debug.Log($"Set now {value}");
             }
 
             var fullSliders = (int) (value / MaxValue);
@@ -52,19 +44,11 @@ public class BarController : MonoBehaviour {
 
             _pointer = fullSliders;
 
-            if (value < _sliders.Length * MaxValue) {
-                Debug.Log($"pointer: {_pointer}");
-            }
-
             if (_pointer == _sliders.Length) {
                 return;
             }
 
             var lastSliderValue = value % MaxValue;
-            if (value < _sliders.Length * MaxValue) {
-                Debug.Log($"lst: {lastSliderValue}");
-            }
-
             GetSlider(_pointer).value = lastSliderValue;
 
             for (var i = _pointer + 1; i < _sliders.Length; i++) {
@@ -74,8 +58,8 @@ public class BarController : MonoBehaviour {
     }
 
     void OnDestroy() {
-        if (_bar) {
-            Destroy(_bar);
+        if (_root) {
+            Destroy(_root);
         }
     }
 
@@ -84,18 +68,18 @@ public class BarController : MonoBehaviour {
     }
 
     public void SetHUDRoot(GameObject hudRoot) {
-        _bar = Instantiate(barRoot, hudRoot.transform);
-        _sliderRoot = Enumerable
-            .Range(0, _bar.transform.childCount)
-            .Select(i => _bar.transform.GetChild(i).gameObject)
-            .First(child => child.CompareTag("SliderRoot"));
+        _root = Instantiate(rootPrefab, hudRoot.transform);
+        _barRoot = Enumerable
+            .Range(0, _root.transform.childCount)
+            .Select(i => _root.transform.GetChild(i).gameObject)
+            .First(child => child.CompareTag("BarRoot"));
     }
 
     public void SetSize(int barNumber) {
         ClearRoot();
 
         _sliders = Enumerable.Range(0, barNumber)
-            .Select(_ => Instantiate(sliderPrefab, _sliderRoot.transform))
+            .Select(_ => Instantiate(barPrefab, _barRoot.transform))
             .Select(slider => slider.GetComponent<Slider>())
             .ToArray();
         _pointer = 0;
@@ -107,9 +91,9 @@ public class BarController : MonoBehaviour {
     }
 
     void ClearRoot() {
-        var childCount = _sliderRoot.transform.childCount;
+        var childCount = _barRoot.transform.childCount;
         for (var i = 0; i < childCount; i++) {
-            Destroy(_sliderRoot.transform.GetChild(i).gameObject);
+            Destroy(_barRoot.transform.GetChild(i).gameObject);
         }
     }
 }

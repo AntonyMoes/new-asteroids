@@ -22,10 +22,6 @@ public class Drawable : MonoBehaviour {
         _selector.RemoveSetter(SetDrawingMode);
     }
 
-    public void CopySettings(Drawable other) {
-        SetDrawingModeSelector(other._selector);
-    }
-
     public void SetDrawingModeSelector(DrawingModeSelector selector) {
         _selector = selector;
         _selector.AddSetter(SetDrawingMode);

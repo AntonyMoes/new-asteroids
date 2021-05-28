@@ -6,7 +6,7 @@ TagManager:
   tags:
   - CameraBounds
   - Enemy
-  - SliderRoot
+  - BarRoot
   layers:
   - Default
   - TransparentFX
