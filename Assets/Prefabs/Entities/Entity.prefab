@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 8640111487330976894}
   - component: {fileID: -5539421281952416503}
   m_Layer: 0
-  m_Name: Drawable
+  m_Name: Entity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

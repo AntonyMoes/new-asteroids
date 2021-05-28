@@ -34,6 +34,26 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8640111486667513161, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640111486667513161, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640111486667513161, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640111486667513161, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640111486667513161, guid: 4a6e2b8dd8e4f754ea836eab4abf352c,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
