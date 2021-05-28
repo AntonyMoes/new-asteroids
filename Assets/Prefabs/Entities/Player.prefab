@@ -15,6 +15,21 @@ MonoBehaviour:
   projectilePrefab: {fileID: 778275390775239271, guid: f191cf6aa1aa20a4fb3b14dd17f68f14,
     type: 3}
   cooldown: 0.1
+--- !u!114 &-7248247859530285797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478744297181186497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97427ae23f9ee3b45a3d36022c1d5d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barRoot: {fileID: 1593229871186217387, guid: 9c856e2b6a8f5f0418675ef95ac2d2d3, type: 3}
+  sliderPrefab: {fileID: 1102181898835895171, guid: ca4a2e1b57178e749bb8049f7efd2935,
+    type: 3}
 --- !u!114 &1121894705605375968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30,6 +45,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 617172648472868781, guid: 212c007ba429a2f4a9c0dbf11bbde0ff,
     type: 3}
   cooldown: 0.3
+  laserCharge: {fileID: -7248247859530285797}
+  charges: 2
+  secondsPerCharge: 15
 --- !u!114 &5829306971227032063
 MonoBehaviour:
   m_ObjectHideFlags: 0

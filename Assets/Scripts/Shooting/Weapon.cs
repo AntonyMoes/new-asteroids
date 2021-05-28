@@ -13,13 +13,17 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     public void Shoot() {
-        if (_isOnCooldown) {
+        if (_isOnCooldown || !CanShoot()) {
             return;
         }
 
         StartCoroutine(Cooldown());
         var projectile = _instantiator(() => Instantiate(projectilePrefab, transform.position, transform.rotation));
         ShootLogic(projectile);
+    }
+
+    protected virtual bool CanShoot() {
+        return true;
     }
 
     IEnumerator Cooldown() {

@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour {
     [SerializeField] GameObject map;
     [SerializeField] DrawingModeSelector drawingModeSelector;
     [SerializeField] BoxCollider2D screenBounds;
+    [SerializeField] GameObject hudRoot;
 
     [SerializeField] float playerSafeZoneSize;
     GameObject _player;
@@ -23,6 +24,7 @@ public class Spawner : MonoBehaviour {
     GameObject PlayerSpawner() {
         _player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         _player.GetComponent<PlayerController>().SetObjectInstantiator(Spawn);
+        _player.GetComponent<BarController>().SetHUDRoot(hudRoot);
         return _player;
     }
 
