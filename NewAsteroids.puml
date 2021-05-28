@@ -1,0 +1,323 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+
+entity DrawableObject
+entity Entity
+entity Player
+entity Enemy
+entity Asteroid
+entity BigAsteroid
+entity Ufo
+entity Projectile
+entity Bullet
+entity LaserRay
+
+entity SpriteRepresentation
+entity PolygonRepresentation
+
+entity Bar
+entity "Laser Charge"
+
+entity "Game Manager"
+
+entity ScoreText
+entity RestartMenu
+entity RestartButton
+entity FinalScore
+entity HUDRoot
+
+entity Camera
+entity "Camera Bounds"
+
+
+class Drawable {
+    - _selector: DrawingModeSelector
+    + void SetDrawingModeSelector(DrawingModeSelector selector)
+    - void SetDrawingMode(bool isSpriteMode)
+    - void Awake()
+    - void OnDestroy()
+}
+class DrawingModeSelector {
+    - _drawingModeSetters: Hashset<Action<bool>>
+    - _isSpriteMode: bool
+    + void AddSetter(Action<bool> setter)
+    + void RemoveSetter(Action<bool> setter)
+    - void SwitchMode()
+    - void Update()
+}
+
+class BoxCollider2D {
+    + bounds: Bounds
+}
+
+abstract class BoundsLeaver {
+    - void OnCollisionExit2D()
+    # {abstract} void OnBoundsLeave(Bounds bounds)
+}
+class BoundsLeaveTeleporter {
+    # void OnBoundsLeave(Bounds bounds)
+}
+class BoundsLeaveDestroyer {
+    # void OnBoundsLeave(Bounds bounds)
+}
+class CameraBounds {
+    - _boundsCollider: BoxCollider2D
+    - camera: Camera
+    - void Awake()
+    - void UpdateSize()
+}
+
+class GameManager {
+    - spawner: Spawner
+    - uiController: UIController
+    - initialWaveSize: int
+    - initialWaveCooldown: float
+    - minimalWaveCooldown: float
+    - initialUfoCooldown: float
+    - minimalUfoCooldown: float
+    - _score: float
+    
+   + void StartGame()
+   - void EndGame()
+   - void UpdateScore(float value)
+   - void ResetScore()
+   - IEnumerator SpawnAsteroids()
+   - IEnumerator SpawnUfos()
+   - void Start()
+}
+'TODO maybe add prefab relations
+class Spawner {
+    - playerPrefab: GameObject
+    - bigAsteroidPrefabs: GameObject[]
+    - asteroidPrefabs: GameObject[]
+    - minAsteroidSpeedup: float
+    - maxAsteroidSpeedup: float
+    - minAsteroidsNum: int
+    - maxAsteroidsNum: int
+    - ufoPrefabs: GameObject[]
+    - map: GameObject
+    - drawingModeSelector: DrawingModeSelector
+    - screenBounds: BoxCollider2D
+    - hudRoot: GameObject
+    - playerSafeZoneSize: float
+    - _player: GameObject
+    - _pointsCallback: Action<float>
+    
+    - GameObject PlayerSpawner()
+    - Vector3 GetRandomPosition()
+    - GameObject UfoSpawner()
+    - GameObject BigAsteroidSpawner()
+    - GameObject AsteroidSpawner(GameObject bigAsteroid)
+    - GameObject EnemySpawner(Func<GameObject> spawner)
+    - GameObject Spawn(Func<GameObject> spawner)
+    + void SetPointsCallback(Action<float> pointsCallback)
+    + void ClearMap()
+    + GameObject SpawnPlayer()
+    + void SpawnUfo()
+    + void SpawnAsteroidWave(int waveSize)
+    + SpawnSmallAsteroids(GameObject asteroid)
+}
+class UIController {
+    - scoreText: TextMeshProGUI
+    - restartMenu: GameObject
+    - finalScoreText: finalScoreText
+    
+    + void UpdateScore(float newScore)
+    + void SetUIMode(bool isPlayingMode)
+}
+
+class CanBeShot {
+    - points: float
+    - _generalCallBack: Action<GameObject>
+    - _pointsCallBack: Action<float>
+    
+    + void SetPointsCallback(Action<float> pointsCallback)
+    + void SetGeneralCallback(Action<GameObject> generalCallback)
+    + void GetShot()
+}
+abstract class Weapon {
+    - projectilePrefab: GameObject
+    - cooldown: float
+    - _collider: Collider2D
+    - _instantiator: Func<Func<GameObject>, GameObject>
+    - _isOnCooldown: bool
+    
+    + void Shoot()
+    + void SetObjectInstantiator()
+    # bool CanShoot()
+    # {abstract} void ShootLogic(GameObject projectile)
+    - IEnumerator Cooldown()
+    - void Awake()
+}
+class Laser {
+    - laserCharge: BarController
+    - charges: int
+    - secondsPerCharge: float
+    - _laserSize: float 
+    
+    - void Start()
+    - void Update()
+    # void ShootLogic(GameObject projectile)
+    # bool CanShoot()
+}
+class MachineGun {
+    # void ShootLogic(GameObject projectile)
+}
+class LaserAttenuation {
+    - attenuationTime: float
+    - _attenuationRate: float
+    
+    - void Start()
+    - void FixedUpdate()
+}
+class Shooter {
+    - destroyOnHit: bool
+    - OnTriggerEnter2D(Collider2D other)
+}
+
+class PlayerController {
+    - thrust: float
+    - rotationSpeed: float
+    - _destroyCallback: Action
+    - _directionInput: Vector2
+    - _instantiator: Func<Func<GameObject>, GameObject>
+    - _rb: Rigidbody2D
+    - weapon1: Weapon
+    - weapon2: Weapon
+    
+    - void Start()
+    - void Update()
+    - void FixedUpdate()
+    - void OnDestroy()
+    + void SetDestroyCallback(Action destroyCallback)
+    + void SetObjectInstantiator(Func<Func<GameObject>, GameObject> instantiator)
+}
+class PlayerFollower {
+    - thrust: float
+    - _player: Transform
+    - _rb: Rigidbody2D
+    
+    - void Start()
+    - void FixedUpdate()
+    + void SetPlayer(Transform player)
+}
+class PlayerKiller {
+    - void OnTriggerEnter2D(Collider2D other)
+}
+
+class BarController {
+    - rootPrefab: GameObject
+    - barPrefab: GameObject
+    - _barRoot: GameObject
+    - _pointer: int
+    - _root: GameObject
+    - _sliders: Slider[]
+    
+    + float Value:get()
+    + void Value:set(float value)
+    + void SetSize(int barNumber) 
+    + void SetHUDRoot(GameObject hudRoot)
+    - Slider GetSlider(int index)
+    - void ClearRoot()
+    - void OnDestroy()
+    
+}
+class SpeedSetter {
+    + minSpeed: float
+    + maxSpeed: float
+    
+    - void Start()
+}
+
+
+DrawableObject <|-- Entity
+Entity <|-- Player
+Entity <|-- Enemy
+Enemy <|-- Asteroid
+Enemy <|-- Ufo
+Asteroid <|-- BigAsteroid
+
+DrawableObject <|-- Projectile
+Projectile <|-- Bullet
+Projectile <|-- LaserRay
+LaserRay *-- LaserAttenuation
+
+DrawableObject *-- SpriteRepresentation
+DrawableObject *-- PolygonRepresentation
+
+DrawableObject *-- Drawable
+DrawableObject *-- Collider2D
+
+SpriteRepresentation <-- Drawable
+PolygonRepresentation <-- Drawable
+Collider2D <-- Drawable : Uses to set up polygon
+
+BoundsLeaver <|-- BoundsLeaveTeleporter
+BoundsLeaver <|-- BoundsLeaveDestroyer
+
+Entity *-- BoundsLeaveTeleporter
+Bullet *-- BoundsLeaveDestroyer
+
+Asteroid *-- SpeedSetter
+Bullet *-- SpeedSetter
+
+DrawingModeSelector o-- Drawable
+
+MapObject *-- DrawableObject
+
+"Camera Bounds" *-- CameraBounds
+"Camera Bounds" *-- BoxCollider2D
+Camera o-- CameraBounds
+BoxCollider2D o-- CameraBounds : Sets up
+BoxCollider2D <-- BoundsLeaver : Watches
+
+Enemy *-- CanBeShot
+GameManager <-- CanBeShot : Updates score
+Enemy *-- PlayerKiller
+Shooter *-- Projectile
+CanBeShot <-- Shooter : Can destroy
+Player <-- PlayerKiller : Can destroy
+
+PlayerController *-- Player
+Weapon "2" *-- Player
+Weapon <-- PlayerController : Shoots
+Weapon <|-- MachineGun
+Weapon <|-- Laser
+BarController *-- Player
+BarController o-- Laser : Stores charge in
+
+BarController o-- "n" Bar
+BarController o-- "Laser Charge"
+"Laser Charge" *-- "n" Bar
+HUDRoot *-- "Laser Charge"
+Spawner o-- HUDRoot
+
+Ufo *-- PlayerFollower
+Player <-- PlayerFollower : Follows
+
+"Game Manager" *-- GameManager
+"Game Manager" *-- Spawner
+"Game Manager" *-- UIController
+"Game Manager" *-- DrawingModeSelector
+Spawner <-- GameManager : Spawns entities
+UIController <-- GameManager : Toggles UI mode
+UIController <-- GameManager : Updates score
+Spawner <-- BigAsteroid : Spawns asteroids
+GameManager <-- Player : Notifies on death
+Spawner <-- Weapon : Spawns projectiles
+
+ScoreText o-- UIController
+RestartMenu o-- UIController
+FinalScore *-- RestartMenu
+RestartButton *-- RestartMenu
+FinalScore o-- UIController
+GameManager <-- RestartButton : Restarts game
+
+Laser o-- LaserRay
+MachineGun o-- Bullet
+
+note "GameObjects are marked as entities (E);\nEvery mentioned class inherits from MonoBehaviour\nunless stated otherwise" as N1
+
+@enduml
