@@ -80,6 +80,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2053424778714012604, guid: 17eb2e108428c29499844ec69f6f5805,
         type: 3}
+      propertyPath: destroyOnHit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053424778714012604, guid: 17eb2e108428c29499844ec69f6f5805,
+        type: 3}
       propertyPath: _destroyOnHit
       value: 1
       objectReference: {fileID: 0}
