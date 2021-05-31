@@ -331,6 +331,6 @@ GameManager <-- StartButton : Starts game
 Laser o-- LaserRay
 MachineGun o-- Bullet
 
-note "GameObjects are marked as entities (E);\nEvery mentioned class inherits from MonoBehaviour\nunless stated otherwise" as N1
+note "GameObjects are marked as entities (E)\nand prefab inheritance is shown as entity inheritance;\nEvery mentioned class inherits from MonoBehaviour\nunless stated otherwise" as N1
 
 @enduml
