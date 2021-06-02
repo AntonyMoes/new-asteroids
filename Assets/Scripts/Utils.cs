@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
 
 public static class Utils {
     public static Vector3 GetRandomPointInBounds(this in Bounds bounds) {
@@ -32,5 +33,9 @@ public static class Utils {
 
     public static T RandomElement<T>(this T[] array) {
         return array[Random.Range(0, array.Length)];
+    }
+
+    public static Vector2 Normalize(this Vector2 vector) {
+        return vector / vector.Length();
     }
 }
