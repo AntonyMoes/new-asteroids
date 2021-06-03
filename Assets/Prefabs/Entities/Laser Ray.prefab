@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationTime: 0.2
+--- !u!114 &5308385874755206222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2480355690446324607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9f4e238a414be789667c08e34404c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5062193840478556070
 PrefabInstance:
   m_ObjectHideFlags: 0

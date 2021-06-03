@@ -69,10 +69,41 @@ MovementToTargetLogic o-- TFollower
 IPositionProvider <|-- TFollower
 IVelocityProvider <|-- TFollower
 
-
 BoundsLeaveLogic <|-- BoundsLeaveTeleportLogic
 BoundsLeaveTeleportLogic o-- IPositionProvider
 BoundsLeaveLogic <|-- BoundsLeaveDestroyLogic
 BoundsLeaveDestroyLogic o-- IDestroyable
+
+interface IPositionVelocityProvider
+IPositionProvider <|-- IPositionVelocityProvider
+IVelocityProvider <|-- IPositionVelocityProvider
+
+interface IShootable {
+    + void GetShot()
+    + Action<float, IPositionVelocityProvider> OnShot:get()
+    + void OnShot:set(Action<float, IPositionVelocityProvider> value)
+}
+class ShootableLogic {
+
+    - _points: float
+    - _shotCallback: Action<float, IPositionVelocityProvider>
+    + ShootableLogic(TShootableObj obj, float points)
+    + void GetShot()
+    + void SetShotCallback(Action<float, IPositionVelocityProvider> shotCallback)
+}
+class ShotLogic {
+    - _destroyOnHit: bool
+    + ShotLogic(IDestroyable objectToDestroyOnShot, bool destroyOnHit)
+    + void CheckShot(string hitObjectTag, IShootable shootable)
+}
+
+class TShootableObj
+IPositionVelocityProvider <|-- TShootableObj
+IDestroyable <|-- TShootableObj
+
+ShootableLogic o-- TShootableObj
+IShootable <|-- ShootableLogic
+IShootable <-- "shoots" ShotLogic
+ShotLogic o-- IDestroyable
 
 @enduml

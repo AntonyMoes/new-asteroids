@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
     Action _destroyCallback;
     Vector2 _directionInput;
 
-    PlayerMovementLogic<RigidbodyProvider> _playerMoveLogic;
+    PlayerMovementLogic<RigidbodyAdapter> _playerMoveLogic;
 
     Weapon _weapon1;
     Weapon _weapon2;
@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour {
     void Awake() {
         _weapon1 = GetComponent<MachineGun>();
         _weapon2 = GetComponent<Laser>();
-        _playerMoveLogic = new PlayerMovementLogic<RigidbodyProvider>(new RigidbodyProvider(this),
+        _playerMoveLogic = new PlayerMovementLogic<RigidbodyAdapter>(new RigidbodyAdapter(this),
             acceleration, rotationSpeed);
-        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformProvider(this));
+        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(this));
     }
 
     void Update() {

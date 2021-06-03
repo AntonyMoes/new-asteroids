@@ -2,10 +2,10 @@
 using UnityEngine;
 using Vector2 = System.Numerics.Vector2;
 
-public class TransformProvider : IPositionProvider, IRotationProvider, IForwardProvider {
+public class TransformAdapter : IPositionProvider, IRotationProvider, IForwardProvider {
     protected readonly MonoBehaviour Target;
 
-    public TransformProvider(MonoBehaviour target) {
+    public TransformAdapter(MonoBehaviour target) {
         Target = target;
     }
 

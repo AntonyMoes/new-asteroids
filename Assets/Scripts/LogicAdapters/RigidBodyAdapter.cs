@@ -2,11 +2,16 @@
 using UnityEngine;
 using Vector2 = System.Numerics.Vector2;
 
-public class RigidbodyProvider : TransformProvider, IVelocityProvider, IRelativeVelocityProvider {
+public class RigidbodyAdapter : TransformAdapter, IPositionVelocityProvider, IRelativeVelocityProvider {
     readonly Rigidbody2D _rb;
 
-    public RigidbodyProvider(MonoBehaviour target) : base(target) {
+    public RigidbodyAdapter(MonoBehaviour target) : base(target) {
         _rb = target.GetComponent<Rigidbody2D>();
+    }
+
+    public Vector2 Velocity {
+        get => _rb.velocity.ToSystem();
+        set => _rb.velocity = value.ToUnity();
     }
 
     public Vector2 RelativeVelocity {
@@ -15,10 +20,5 @@ public class RigidbodyProvider : TransformProvider, IVelocityProvider, IRelative
             return rotated.ToSystem();
         }
         set => _rb.velocity = Target.transform.rotation * value.ToUnity();
-    }
-
-    public Vector2 Velocity {
-        get => _rb.velocity.ToSystem();
-        set => _rb.velocity = value.ToUnity();
     }
 }

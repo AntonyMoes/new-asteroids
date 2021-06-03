@@ -1,5 +1,7 @@
 ﻿using System;
+using GameLogic;
 using UnityEngine;
+using Bounds = UnityEngine.Bounds;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour {
@@ -25,7 +27,7 @@ public class Spawner : MonoBehaviour {
         var playerObj = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         playerObj.GetComponent<BarController>().SetHUDRoot(hudRoot);
         _player = playerObj.GetComponent<PlayerController>();
-        _player.SetObjectInstantiator(Spawn);
+        _player.SetObjectInstantiator(SpawnDrawable);
         return playerObj;
     }
 
@@ -42,7 +44,8 @@ public class Spawner : MonoBehaviour {
         var position = GetRandomPosition();
         var ufo = Instantiate(ufoPrefabs.RandomElement(), position, Quaternion.identity);
 
-        ufo.GetComponent<UfoController>().SetPlayer(_player);
+        var ufoController = ufo.GetComponent<UfoController>();
+        ufoController.SetPlayer(_player);
 
         return ufo;
     }
@@ -52,17 +55,17 @@ public class Spawner : MonoBehaviour {
         var rotation = Utils.GetRandomRotation();
         var asteroid = Instantiate(bigAsteroidPrefabs.RandomElement(), position, rotation);
 
-        asteroid.GetComponent<CanBeShot>().SetGeneralCallback(SpawnSmallAsteroids);
+        asteroid.GetComponent<IShootable>().OnShot += (points, posVelProvider) => SpawnSmallAsteroids(posVelProvider);
 
         return asteroid;
     }
 
-    GameObject AsteroidSpawner(GameObject bigAsteroid) {
-        var position = bigAsteroid.GetComponent<Collider2D>().bounds.GetRandomPointInBounds();
+    GameObject AsteroidSpawner(IPositionVelocityProvider bigAsteroid) {
+        var position = bigAsteroid.Position;
         var rotation = Utils.GetRandomRotation();
-        var asteroid = Instantiate(asteroidPrefabs.RandomElement(), position, rotation);
+        var asteroid = Instantiate(asteroidPrefabs.RandomElement(), position.ToUnity(), rotation);
 
-        var baseSpeed = bigAsteroid.GetComponent<Rigidbody2D>().velocity.magnitude;
+        var baseSpeed = bigAsteroid.Velocity.Length();
         var asteroidController = asteroid.GetComponent<AsteroidController>();
         asteroidController.minSpeed = baseSpeed * minAsteroidSpeedup;
         asteroidController.minSpeed = baseSpeed * maxAsteroidSpeedup;
@@ -70,13 +73,13 @@ public class Spawner : MonoBehaviour {
         return asteroid;
     }
 
-    GameObject EnemySpawner(Func<GameObject> spawner) {
-        var spawned = spawner();
-        spawned.GetComponent<CanBeShot>().SetPointsCallback(_pointsCallback);
-        return spawned;
+    GameObject SpawnEnemy(Func<GameObject> spawner) {
+        var enemy = spawner();
+        enemy.GetComponent<IShootable>().OnShot += (points, posVelProvider) => _pointsCallback(points);
+        return enemy;
     }
 
-    GameObject Spawn(Func<GameObject> spawner) {
+    GameObject SpawnDrawable(Func<GameObject> spawner) {
         var spawned = spawner();
 
         spawned.GetComponent<Drawable>().SetDrawingModeSelector(drawingModeSelector);
@@ -96,23 +99,23 @@ public class Spawner : MonoBehaviour {
     }
 
     public GameObject SpawnPlayer() {
-        return Spawn(PlayerSpawner);
+        return SpawnDrawable(PlayerSpawner);
     }
 
     public void SpawnUfo() {
-        Spawn(() => EnemySpawner(UfoSpawner));
+        SpawnDrawable(() => SpawnEnemy(UfoSpawner));
     }
 
     public void SpawnAsteroidWave(int waveSize) {
         for (var i = 0; i < waveSize; i++) {
-            Spawn(() => EnemySpawner(BigAsteroidSpawner));
+            SpawnDrawable(() => SpawnEnemy(BigAsteroidSpawner));
         }
     }
 
-    void SpawnSmallAsteroids(GameObject asteroid) {
+    void SpawnSmallAsteroids(IPositionVelocityProvider asteroid) {
         var asteroidsNum = Random.Range(minAsteroidsNum, maxAsteroidsNum + 1);
         for (var i = 0; i < asteroidsNum; i++) {
-            Spawn(() => EnemySpawner(() => AsteroidSpawner(asteroid)));
+            SpawnDrawable(() => SpawnEnemy(() => AsteroidSpawner(asteroid)));
         }
     }
 }
