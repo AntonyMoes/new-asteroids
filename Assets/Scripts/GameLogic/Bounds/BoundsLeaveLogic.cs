@@ -1,7 +1,9 @@
 ﻿namespace GameLogic {
     public abstract class BoundsLeaveLogic {
+        const string BoundsTag = "GameBounds";
+
         public void CheckBoundsLeave(string leaveObjectTag, Bounds? bounds) {
-            if (leaveObjectTag != "GameBounds" || bounds == null) {
+            if (leaveObjectTag != BoundsTag || bounds == null) {
                 return;
             }
 

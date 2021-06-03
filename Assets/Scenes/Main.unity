@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 644399307}
   m_Layer: 0
   m_Name: Camera Bounds
-  m_TagString: CameraBounds
+  m_TagString: GameBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1776,8 +1776,8 @@ MonoBehaviour:
   - {fileID: 3137273753446425351, guid: 9576660440db0664b9cfd4475fb9108a, type: 3}
   asteroidPrefabs:
   - {fileID: 5281906527042771942, guid: 11bd23cc39203c142bb14e20709216f5, type: 3}
-  minAsteroidSpeedup: 1.5
-  maxAsteroidSpeedup: 2
+  minAsteroidSpeedup: 15
+  maxAsteroidSpeedup: 20
   minAsteroidsNum: 2
   maxAsteroidsNum: 3
   ufoPrefabs:

@@ -10,7 +10,7 @@ namespace GameLogic {
 
         protected override void OnBoundsLeave(Bounds bounds) {
             var extents = bounds.Size / 2;
-            var vectorToCenter = _objectToTeleport.Position - bounds.Center;
+            var vectorToCenter = bounds.Center - _objectToTeleport.Position;
 
             var newPosition = _objectToTeleport.Position;
             if (Math.Abs(vectorToCenter.X) >= extents.X) {

@@ -7,6 +7,7 @@ TagManager:
   - CameraBounds
   - Enemy
   - BarRoot
+  - GameBounds
   layers:
   - Default
   - TransparentFX

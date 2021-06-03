@@ -1,0 +1,78 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+abstract class BoundsLeaveLogic {
+    + void CheckBoundsLeave(string leaveObjectTag, Bounds? bounds)
+    {abstract} # void OnBoundsLeave(Bounds bounds)
+}
+
+class BoundsLeaveTeleportLogic {
+    + BoundsLeaveTeleportLogic(IPositionProvider objectToTeleport)
+    # void OnBoundsLeave(Bounds bounds)
+}
+
+class BoundsLeaveDestroyLogic {
+    + BoundsLeaveDestroyLogic(IDestroyable objectToDestroy)
+    # void OnBoundsLeave(Bounds bounds)
+}
+
+interface IPositionProvider {
+    + Vector2 Position:get()
+    + void Position:set(Vector2 value)
+}
+
+interface IRotationProvider {
+    + float Rotation:get()
+    + void Rotation:set(float value)
+}
+
+interface IForwardProvider {
+    + Vector2 Forward:get()
+}
+
+interface IDestroyable {
+    + void Destroy() 
+}
+
+interface IVelocityProvider {
+    + Vector2 Velocity:get()
+    + void Velocity:set(Vector2 value)
+}
+
+interface IRelativeVelocityProvider {
+    + Vector2 RelativeVelocity:get()
+    + void RelativeVelocity:set(Vector2 value)
+}
+
+class PlayerMovementLogic {
+    - _acceleration: float
+    - _rotationSpeed: float
+    + PlayerMovementLogic(TPlayer playerObject, float acceleration, float rotationSpeed)
+    + void ApplyPlayerInput(Vector2 directionInput, float deltaTime)
+}
+PlayerMovementLogic o-- TPlayer
+IRelativeVelocityProvider <|-- TPlayer
+IRotationProvider <|-- TPlayer
+
+class ConstantMovementLogic {
+    + ConstantMovementLogic(IRelativeVelocityProvider obj, float speed)
+}
+ConstantMovementLogic o-- IRelativeVelocityProvider
+
+class MovementToTargetLogic {
+    - _acceleration: float
+    + MovementToTargetLogic(IPositionProvider target, TFollower followerObject, float acceleration)
+    + void UpdateFollowDirection(float deltaTime)
+}
+MovementToTargetLogic o-- IPositionProvider
+MovementToTargetLogic o-- TFollower
+IPositionProvider <|-- TFollower
+IVelocityProvider <|-- TFollower
+
+
+BoundsLeaveLogic <|-- BoundsLeaveTeleportLogic
+BoundsLeaveTeleportLogic o-- IPositionProvider
+BoundsLeaveLogic <|-- BoundsLeaveDestroyLogic
+BoundsLeaveDestroyLogic o-- IDestroyable
+
+@enduml

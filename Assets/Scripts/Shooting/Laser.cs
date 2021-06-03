@@ -9,7 +9,7 @@ public class Laser : Weapon {
     void Start() {
         laserCharge.SetSize(charges);
         laserCharge.Value = charges;
-        var screenBounds = GameObject.FindWithTag("CameraBounds").GetComponent<BoxCollider2D>().bounds;
+        var screenBounds = GameObject.FindWithTag("GameBounds").GetComponent<BoxCollider2D>().bounds;
         _laserSize = screenBounds.size.magnitude;
     }
 

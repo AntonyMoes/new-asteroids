@@ -1,26 +1,26 @@
 ﻿using System;
+using GameLogic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    [SerializeField] float thrust;
+    [SerializeField] float acceleration;
     [SerializeField] float rotationSpeed;
+    BoundsLeaveLogic _boundsLeaveLogic;
 
     Action _destroyCallback;
     Vector2 _directionInput;
 
-    Func<Func<GameObject>, GameObject> _instantiator;
-    Rigidbody2D _rb;
+    PlayerMovementLogic<RigidbodyProvider> _playerMoveLogic;
 
     Weapon _weapon1;
     Weapon _weapon2;
 
-    void Start() {
-        _rb = GetComponent<Rigidbody2D>();
+    void Awake() {
         _weapon1 = GetComponent<MachineGun>();
         _weapon2 = GetComponent<Laser>();
-
-        _weapon1.SetObjectInstantiator(_instantiator);
-        _weapon2.SetObjectInstantiator(_instantiator);
+        _playerMoveLogic = new PlayerMovementLogic<RigidbodyProvider>(new RigidbodyProvider(this),
+            acceleration, rotationSpeed);
+        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformProvider(this));
     }
 
     void Update() {
@@ -37,12 +37,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        _rb.AddRelativeForce(Vector2.up * (_directionInput.y * thrust), ForceMode2D.Impulse);
-        transform.Rotate(Vector3.forward, -_directionInput.x * rotationSpeed * Time.fixedDeltaTime);
+        _playerMoveLogic.ApplyPlayerInput(_directionInput.ToSystem(), Time.fixedDeltaTime);
     }
 
     void OnDestroy() {
         _destroyCallback?.Invoke();
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        _boundsLeaveLogic.CheckBoundsLeave(other.tag, other.bounds.ToLogic());
     }
 
     public void SetDestroyCallback(Action destroyCallback) {
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void SetObjectInstantiator(Func<Func<GameObject>, GameObject> instantiator) {
-        _instantiator = instantiator;
+        _weapon1.SetObjectInstantiator(instantiator);
+        _weapon2.SetObjectInstantiator(instantiator);
     }
 }

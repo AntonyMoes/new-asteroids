@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &7690777528124964425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608477040431542585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 807619821f5199c459591cb9d104836c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrust: 0.1
 --- !u!82 &5950961523538890631
 AudioSource:
   m_ObjectHideFlags: 0
@@ -109,6 +96,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7690777528124964425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608477040431542585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807619821f5199c459591cb9d104836c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 6
 --- !u!1001 &5250310508857579923
 PrefabInstance:
   m_ObjectHideFlags: 0

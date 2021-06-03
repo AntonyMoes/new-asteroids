@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba81a95b1e3eabf4eb91e6d994645120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 0.2
+  acceleration: 12
   rotationSpeed: 150
 --- !u!114 &7558677340949601538
 MonoBehaviour:
@@ -285,7 +285,7 @@ PrefabInstance:
     - target: {fileID: 5564239252865351639, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
         type: 3}
       propertyPath: m_LinearDrag
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5564239252865351639, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
         type: 3}

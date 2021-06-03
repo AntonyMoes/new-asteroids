@@ -1,12 +1,12 @@
 ﻿using System.Numerics;
 
 namespace GameLogic {
-    public class PlayerMoveLogic<TPlayer> where TPlayer : class, IRotationProvider, IRelativeVelocityProvider {
+    public class PlayerMovementLogic<TPlayer> where TPlayer : class, IRotationProvider, IRelativeVelocityProvider {
         readonly float _acceleration;
         readonly TPlayer _playerObject;
         readonly float _rotationSpeed;
 
-        public PlayerMoveLogic(TPlayer playerObject, float acceleration, float rotationSpeed) {
+        public PlayerMovementLogic(TPlayer playerObject, float acceleration, float rotationSpeed) {
             _playerObject = playerObject;
             _acceleration = acceleration;
             _rotationSpeed = rotationSpeed;

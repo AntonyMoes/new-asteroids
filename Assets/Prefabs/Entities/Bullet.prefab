@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &720824136392419306
+--- !u!114 &5500275857237281692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,23 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4517235222440738723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b405f49a9f594b3eb1e4d422d5c0b76e, type: 3}
+  m_Script: {fileID: 11500000, guid: 363485106c7f47608fe864fc3a7c8e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8695870955561570747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4517235222440738723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1558d940a24c2a9c2f55f261635f98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minSpeed: 18
-  maxSpeed: 18
+  speed: 18
 --- !u!1001 &6528822674720781178
 PrefabInstance:
   m_ObjectHideFlags: 0

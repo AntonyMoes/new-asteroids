@@ -18,14 +18,15 @@ public class Spawner : MonoBehaviour {
     [SerializeField] GameObject hudRoot;
 
     [SerializeField] float playerSafeZoneSize;
-    GameObject _player;
+    PlayerController _player;
     Action<float> _pointsCallback;
 
     GameObject PlayerSpawner() {
-        _player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        _player.GetComponent<PlayerController>().SetObjectInstantiator(Spawn);
-        _player.GetComponent<BarController>().SetHUDRoot(hudRoot);
-        return _player;
+        var playerObj = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        playerObj.GetComponent<BarController>().SetHUDRoot(hudRoot);
+        _player = playerObj.GetComponent<PlayerController>();
+        _player.SetObjectInstantiator(Spawn);
+        return playerObj;
     }
 
     Vector3 GetRandomPosition() {
@@ -41,7 +42,7 @@ public class Spawner : MonoBehaviour {
         var position = GetRandomPosition();
         var ufo = Instantiate(ufoPrefabs.RandomElement(), position, Quaternion.identity);
 
-        ufo.GetComponent<PlayerFollower>().SetPlayer(_player.transform);
+        ufo.GetComponent<UfoController>().SetPlayer(_player);
 
         return ufo;
     }
@@ -62,9 +63,9 @@ public class Spawner : MonoBehaviour {
         var asteroid = Instantiate(asteroidPrefabs.RandomElement(), position, rotation);
 
         var baseSpeed = bigAsteroid.GetComponent<Rigidbody2D>().velocity.magnitude;
-        var speedSetter = asteroid.GetComponent<SpeedSetter>();
-        speedSetter.minSpeed = baseSpeed * minAsteroidSpeedup;
-        speedSetter.minSpeed = baseSpeed * maxAsteroidSpeedup;
+        var asteroidController = asteroid.GetComponent<AsteroidController>();
+        asteroidController.minSpeed = baseSpeed * minAsteroidSpeedup;
+        asteroidController.minSpeed = baseSpeed * maxAsteroidSpeedup;
 
         return asteroid;
     }
