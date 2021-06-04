@@ -44,6 +44,25 @@ interface IRelativeVelocityProvider {
     + void RelativeVelocity:set(Vector2 value)
 }
 
+interface IScaleProvider {
+    + Vector2 Scale:get()
+    + void Scale:set(Vector2 value)
+}
+
+interface ITransformProvider
+IPositionProvider <|-- ITransformProvider
+IRotationProvider <|-- ITransformProvider
+IScaleProvider <|-- ITransformProvider
+IForwardProvider <|-- ITransformProvider
+
+interface ISizeProvider {
+    + Vector2 Size:get()
+}
+
+interface ISizedTransformProvider
+ITransformProvider <|-- ISizedTransformProvider
+ISizeProvider <|-- ISizedTransformProvider
+
 class PlayerMovementLogic {
     - _acceleration: float
     - _rotationSpeed: float
@@ -65,9 +84,7 @@ class MovementToTargetLogic {
     + void UpdateFollowDirection(float deltaTime)
 }
 MovementToTargetLogic o-- IPositionProvider
-MovementToTargetLogic o-- TFollower
-IPositionProvider <|-- TFollower
-IVelocityProvider <|-- TFollower
+MovementToTargetLogic o-- IPositionVelocityProvider
 
 BoundsLeaveLogic <|-- BoundsLeaveTeleportLogic
 BoundsLeaveTeleportLogic o-- IPositionProvider
@@ -84,7 +101,6 @@ interface IShootable {
     + void OnShot:set(Action<float, IPositionVelocityProvider> value)
 }
 class ShootableLogic {
-
     - _points: float
     - _shotCallback: Action<float, IPositionVelocityProvider>
     + ShootableLogic(TShootableObj obj, float points)
@@ -105,5 +121,47 @@ ShootableLogic o-- TShootableObj
 IShootable <|-- ShootableLogic
 IShootable <-- "shoots" ShotLogic
 ShotLogic o-- IDestroyable
+
+abstract class Weapon {
+    - _cooldownTime: float
+    - _remainingCooldown: float
+    - _projectileCreator: Func<ISizedTransformProvider, ITransformProvider>
+    + OnShoot: Action
+    # Weapon(float cooldownTime, ISizedTransformProvider weaponWielder, Func<ISizedTransformProvider, ITransformProvider> projectileCreator)
+    + void Shoot()
+    + void UpdateWeaponSystems(float deltaTime)
+    # void ShootLogic(ITransformProvider projectile)
+    # void AdditionalUpdate(float deltaTime)
+    # bool CanShoot()
+}
+
+class MachineGun {
+    + MachineGun(float cooldownTime, ISizedTransformProvider weaponWielder, Func<ISizedTransformProvider, ITransformProvider> projectileCreator)
+}
+
+class Laser {
+    - _maxCharge: int
+    - _timePerCharge: float
+    - _currentCharge: float
+    - _maxLaserScale: float
+    + Laser(float cooldownTime, ISizedTransformProvider weaponWielder, Func<ISizedTransformProvider, ITransformProvider> projectileCreator, int maxCharge, float timePerCharge, float maxLaserScale)
+    # void ShootLogic(ITransformProvider projectile)
+    # void AdditionalUpdate(float deltaTime)
+    # bool CanShoot()
+}
+
+Weapon o-- ISizedTransformProvider
+Weapon <|-- MachineGun
+Weapon <|-- Laser
+
+class LaserRayAttenuationLogic {
+    - _attenuationRate: float
+    + LaserRayAttenuationLogic(TRay ray, float attenuationTime)
+    + void UpdateAttenuation(float deltaTime)
+}
+
+LaserRayAttenuationLogic o-- TRay
+IScaleProvider <|-- TRay
+IDestroyable <|-- TRay
 
 @enduml

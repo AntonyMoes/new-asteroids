@@ -2,15 +2,15 @@
 using GameLogic;
 using UnityEngine;
 
-public class UfoController : DestroyableBehaviour, IDestroyable, IShootable {
+public class UfoController : DestroyableBehaviour, IShootable {
     [SerializeField] float acceleration;
     [SerializeField] float points;
     BoundsLeaveLogic _boundsLeaveLogic;
     ShootableLogic<DestroyableRigidbodyAdapter> _shootableLogic;
-    MovementToTargetLogic<RigidbodyAdapter> _targetFollowLogic;
+    MovementToTargetLogic _targetFollowLogic;
 
     void Awake() {
-        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(this));
+        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(transform));
         _shootableLogic = new ShootableLogic<DestroyableRigidbodyAdapter>(
             new DestroyableRigidbodyAdapter(this), points);
     }
@@ -32,8 +32,8 @@ public class UfoController : DestroyableBehaviour, IDestroyable, IShootable {
         set => _shootableLogic.OnShot = value;
     }
 
-    public void SetPlayer(PlayerController player) {
-        _targetFollowLogic = new MovementToTargetLogic<RigidbodyAdapter>(new TransformAdapter(player),
-            new RigidbodyAdapter(this), acceleration);
+    public void SetPlayer(Transform player) {
+        _targetFollowLogic = new MovementToTargetLogic(new TransformAdapter(player),
+            new RigidbodyAdapter(transform), acceleration);
     }
 }

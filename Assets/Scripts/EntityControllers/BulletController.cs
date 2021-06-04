@@ -8,7 +8,7 @@ public class BulletController : DestroyableBehaviour {
     ShotLogic _shotLogic;
 
     void Awake() {
-        _constantVelocityLogic = new ConstantMovementLogic(new RigidbodyAdapter(this), speed);
+        _constantVelocityLogic = new ConstantMovementLogic(new RigidbodyAdapter(transform), speed);
         _boundsLeaveLogic = new BoundsLeaveDestroyLogic(this);
         _shotLogic = new ShotLogic(this, true);
     }

@@ -12,13 +12,13 @@ public class AsteroidController : DestroyableBehaviour, IShootable {
     ShootableLogic<DestroyableRigidbodyAdapter> _shootableLogic;
 
     void Awake() {
-        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(this));
+        _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(transform));
         _shootableLogic = new ShootableLogic<DestroyableRigidbodyAdapter>(
             new DestroyableRigidbodyAdapter(this), points);
     }
 
     void Start() {
-        _constantVelocityLogic = new ConstantMovementLogic(new RigidbodyAdapter(this),
+        _constantVelocityLogic = new ConstantMovementLogic(new RigidbodyAdapter(transform),
             Random.Range(minSpeed, maxSpeed));
     }
 

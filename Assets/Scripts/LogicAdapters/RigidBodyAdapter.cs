@@ -5,7 +5,7 @@ using Vector2 = System.Numerics.Vector2;
 public class RigidbodyAdapter : TransformAdapter, IPositionVelocityProvider, IRelativeVelocityProvider {
     readonly Rigidbody2D _rb;
 
-    public RigidbodyAdapter(MonoBehaviour target) : base(target) {
+    public RigidbodyAdapter(Transform target) : base(target) {
         _rb = target.GetComponent<Rigidbody2D>();
     }
 

@@ -1,140 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!82 &-473275173973348949
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420634520064414255}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &2855284427409482258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420634520064414255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4cfbf4f4e045fb8e8cb7bf3842842b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 4517235222440738723, guid: fe3fec400f061dc49ab0f9b03c7ad960,
-    type: 3}
-  cooldown: 0.1
-  shotSound: {fileID: 8300000, guid: 1bffc26b97546494d920a8fb97c4b6c0, type: 3}
-  minPitch: 1
-  maxPitch: 1.2
---- !u!114 &3539384418562085749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4420634520064414255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 193066d1c0184660b124bbdd9cea36b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2480355690446324607, guid: 489a782f8652e2640ab2052de7410385,
-    type: 3}
-  cooldown: 0.3
-  shotSound: {fileID: 8300000, guid: e4f7519710e989b4889a4e2d4e0b572e, type: 3}
-  minPitch: 1
-  maxPitch: 1.5
-  laserCharge: {fileID: 7558677340949601538}
-  charges: 2
-  secondsPerCharge: 15
 --- !u!114 &6835463291674049754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 12
   rotationSpeed: 150
+  bulletPrefab: {fileID: 4517235222440738723, guid: fe3fec400f061dc49ab0f9b03c7ad960,
+    type: 3}
+  machineGunSound: {fileID: 8300000, guid: 1bffc26b97546494d920a8fb97c4b6c0, type: 3}
+  machineGunCooldown: 0.1
+  laserRayPrefab: {fileID: 2480355690446324607, guid: 489a782f8652e2640ab2052de7410385,
+    type: 3}
+  laserSound: {fileID: 8300000, guid: e4f7519710e989b4889a4e2d4e0b572e, type: 3}
+  laserCooldown: 0.3
+  laserCharges: 2
+  timePerCharge: 15
+  laserChargeUI: {fileID: 7558677340949601538}
+  minPitch: 0.9
+  maxPitch: 1.2
 --- !u!114 &7558677340949601538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +50,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4270702690007010055, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4270702690007010055, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
         type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.size
@@ -216,6 +99,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564239252865351624, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5564239252865351624, guid: 59b38abfe4212ce4fbcf197bfcfcba73,
         type: 3}

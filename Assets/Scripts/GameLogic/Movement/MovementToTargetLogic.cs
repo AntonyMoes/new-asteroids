@@ -1,10 +1,11 @@
 ﻿namespace GameLogic {
-    public class MovementToTargetLogic<TFollower> where TFollower : class, IPositionProvider, IVelocityProvider {
+    public class MovementToTargetLogic {
         readonly float _acceleration;
-        readonly TFollower _followerObject;
+        readonly IPositionVelocityProvider _followerObject;
         readonly IPositionProvider _target;
 
-        public MovementToTargetLogic(IPositionProvider target, TFollower followerObject, float acceleration) {
+        public MovementToTargetLogic(IPositionProvider target, IPositionVelocityProvider followerObject,
+            float acceleration) {
             _target = target;
             _followerObject = followerObject;
             _acceleration = acceleration;

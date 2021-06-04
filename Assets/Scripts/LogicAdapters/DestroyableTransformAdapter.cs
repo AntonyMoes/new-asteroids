@@ -3,7 +3,7 @@
 public class DestroyableRigidbodyAdapter : RigidbodyAdapter, IDestroyable {
     readonly IDestroyable _destroyable;
 
-    public DestroyableRigidbodyAdapter(DestroyableBehaviour target) : base(target) {
+    public DestroyableRigidbodyAdapter(DestroyableBehaviour target) : base(target.transform) {
         _destroyable = target;
     }
 

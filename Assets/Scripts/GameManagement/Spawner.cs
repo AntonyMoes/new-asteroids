@@ -20,14 +20,17 @@ public class Spawner : MonoBehaviour {
     [SerializeField] GameObject hudRoot;
 
     [SerializeField] float playerSafeZoneSize;
-    PlayerController _player;
+    Transform _player;
     Action<float> _pointsCallback;
 
     GameObject PlayerSpawner() {
         var playerObj = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         playerObj.GetComponent<BarController>().SetHUDRoot(hudRoot);
-        _player = playerObj.GetComponent<PlayerController>();
-        _player.SetObjectInstantiator(SpawnDrawable);
+        _player = playerObj.transform;
+
+        var playerController = playerObj.GetComponent<PlayerController>();
+        playerController.SetupWeapons(SpawnDrawable, screenBounds.bounds.size.magnitude);
+
         return playerObj;
     }
 
