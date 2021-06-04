@@ -1,5 +1,5 @@
 # new-asteroids
 
-## Class diagram:
-![](NewAsteroids.png)
-[**File**](NewAsteroids.png)
+## Logic class diagram:
+![](GameLogic.png)
+[**File**](GameLogic.png)
