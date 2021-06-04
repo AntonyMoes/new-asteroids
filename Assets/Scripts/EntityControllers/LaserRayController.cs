@@ -8,7 +8,7 @@ public class LaserRayController : DestroyableBehaviour {
     ShotLogic _shotLogic;
 
     void Awake() {
-        _shotLogic = new ShotLogic(this, false);
+        _shotLogic = new ShotLogic("Enemy");
         _attenuationLogic =
             new LaserRayAttenuationLogic<DestroyableRigidbodyAdapter>(new DestroyableRigidbodyAdapter(this),
                 attenuationTime);

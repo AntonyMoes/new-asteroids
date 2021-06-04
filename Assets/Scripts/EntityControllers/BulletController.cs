@@ -10,7 +10,7 @@ public class BulletController : DestroyableBehaviour {
     void Awake() {
         _constantVelocityLogic = new ConstantMovementLogic(new RigidbodyAdapter(transform), speed);
         _boundsLeaveLogic = new BoundsLeaveDestroyLogic(this);
-        _shotLogic = new ShotLogic(this, true);
+        _shotLogic = new ShotLogic("Enemy", this);
     }
 
     void OnTriggerEnter2D(Collider2D other) {

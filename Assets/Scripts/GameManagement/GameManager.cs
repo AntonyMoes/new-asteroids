@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
         uiController.SetUIMode(UIMode.Game);
 
         var player = spawner.SpawnPlayer();
-        player.GetComponent<PlayerController>().SetDestroyCallback(EndGame);
+        player.GetComponent<PlayerController>().OnShot += (_, __) => EndGame();
 
         StartCoroutine(SpawnAsteroids());
         StartCoroutine(SpawnUfos());

@@ -1,22 +1,19 @@
 ﻿namespace GameLogic {
     public class ShotLogic {
-        const string ShootableTag = "Enemy";
-        readonly bool _destroyOnHit;
         readonly IDestroyable _objectToDestroyOnShot;
+        readonly string _shootableTag;
 
-        public ShotLogic(IDestroyable objectToDestroyOnShot, bool destroyOnHit) {
+        public ShotLogic(string shootableTag, IDestroyable objectToDestroyOnShot = null) {
+            _shootableTag = shootableTag;
             _objectToDestroyOnShot = objectToDestroyOnShot;
-            _destroyOnHit = destroyOnHit;
         }
 
         public void CheckShot(string hitObjectTag, IShootable shootable) {
-            if (hitObjectTag != ShootableTag || shootable == null) {
+            if (hitObjectTag != _shootableTag || shootable == null) {
                 return;
             }
 
-            if (_destroyOnHit) {
-                _objectToDestroyOnShot.Destroy();
-            }
+            _objectToDestroyOnShot?.Destroy();
 
             shootable.GetShot();
         }

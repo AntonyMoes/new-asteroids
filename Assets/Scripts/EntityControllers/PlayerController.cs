@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameLogic;
-using LogicAdapters;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : DestroyableBehaviour, IShootable {
     [SerializeField] float acceleration;
     [SerializeField] float rotationSpeed;
 
@@ -23,19 +22,19 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float minPitch;
     [SerializeField] float maxPitch;
 
+    readonly List<(string, Weapon)> _weaponsWithActivators = new List<(string, Weapon)>();
     BoundsLeaveLogic _boundsLeaveLogic;
 
-    Action _destroyCallback;
     Vector2 _directionInput;
 
     PlayerMovementLogic<RigidbodyAdapter> _playerMoveLogic;
-
-    readonly List<(string, Weapon)> _weaponsWithActivators = new List<(string, Weapon)>();
+    ShootableLogic<DestroyableRigidbodyAdapter> _shootableLogic;
 
     void Awake() {
         _playerMoveLogic = new PlayerMovementLogic<RigidbodyAdapter>(new RigidbodyAdapter(transform),
             acceleration, rotationSpeed);
         _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(transform));
+        _shootableLogic = new ShootableLogic<DestroyableRigidbodyAdapter>(new DestroyableRigidbodyAdapter(this), 0);
     }
 
     void Update() {
@@ -54,16 +53,17 @@ public class PlayerController : MonoBehaviour {
         _playerMoveLogic.ApplyPlayerInput(_directionInput.ToSystem(), Time.fixedDeltaTime);
     }
 
-    void OnDestroy() {
-        _destroyCallback?.Invoke();
-    }
-
     void OnTriggerExit2D(Collider2D other) {
         _boundsLeaveLogic.CheckBoundsLeave(other.tag, other.bounds.ToLogic());
     }
 
-    public void SetDestroyCallback(Action destroyCallback) {
-        _destroyCallback = destroyCallback;
+    public Action<float, IPositionVelocityProvider> OnShot {
+        get => _shootableLogic.OnShot;
+        set => _shootableLogic.OnShot = value;
+    }
+
+    public void GetShot() {
+        _shootableLogic.GetShot();
     }
 
     void SetupWeaponSound(Weapon weapon, AudioClip clip) {

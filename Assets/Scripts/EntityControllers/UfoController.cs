@@ -7,16 +7,22 @@ public class UfoController : DestroyableBehaviour, IShootable {
     [SerializeField] float points;
     BoundsLeaveLogic _boundsLeaveLogic;
     ShootableLogic<DestroyableRigidbodyAdapter> _shootableLogic;
+    ShotLogic _shotLogic;
     MovementToTargetLogic _targetFollowLogic;
 
     void Awake() {
         _boundsLeaveLogic = new BoundsLeaveTeleportLogic(new TransformAdapter(transform));
         _shootableLogic = new ShootableLogic<DestroyableRigidbodyAdapter>(
             new DestroyableRigidbodyAdapter(this), points);
+        _shotLogic = new ShotLogic("Player");
     }
 
     void FixedUpdate() {
         _targetFollowLogic.UpdateFollowDirection(Time.fixedDeltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        _shotLogic.CheckShot(other.tag, other.gameObject.GetComponent<IShootable>());
     }
 
     void OnTriggerExit2D(Collider2D other) {

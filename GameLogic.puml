@@ -108,8 +108,8 @@ class ShootableLogic {
     + void SetShotCallback(Action<float, IPositionVelocityProvider> shotCallback)
 }
 class ShotLogic {
-    - _destroyOnHit: bool
-    + ShotLogic(IDestroyable objectToDestroyOnShot, bool destroyOnHit)
+    - _shootableTag: string
+    + ShotLogic(string shootableTag, IDestroyable objectToDestroyOnShot = null)
     + void CheckShot(string hitObjectTag, IShootable shootable)
 }
 
