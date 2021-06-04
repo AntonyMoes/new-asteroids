@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class CameraBounds : MonoBehaviour {
-    [SerializeField] Camera camera;
+    [SerializeField] Camera cam;
     BoxCollider2D _boundsCollider;
 
     void Awake() {
@@ -12,8 +12,8 @@ public class CameraBounds : MonoBehaviour {
     }
 
     void UpdateSize() {
-        var cameraHeight = camera.orthographicSize * 2;
-        var cameraSize = new Vector2(cameraHeight * camera.aspect, cameraHeight);
+        var cameraHeight = cam.orthographicSize * 2;
+        var cameraSize = new Vector2(cameraHeight * cam.aspect, cameraHeight);
 
         if (_boundsCollider.size != cameraSize) {
             _boundsCollider.size = cameraSize;

@@ -95,6 +95,7 @@ public class PlayerController : DestroyableBehaviour, IShootable {
             laserCharges, timePerCharge, maxMapDistance);
 
         laserChargeUI.SetSize(laserCharges);
+        laserChargeUI.Value = laserCharges;
         laser.OnChangeCharge += charge => laserChargeUI.Value = charge;
 
         var tuples = new (string, Weapon, AudioClip)[] {
